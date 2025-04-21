@@ -3,7 +3,7 @@ import { LogOut, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Navbar } from "@/components/ui/navbar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -15,6 +15,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function DashboardLayout() {
+  const navigate = useNavigate();
+  function logout() {
+    localStorage.removeItem("access_token");
+    navigate("/");
+  }
   return (
     <section className="h-screen flex items-stretch">
       <section className="w-64 border-r">
@@ -45,7 +50,7 @@ export default function DashboardLayout() {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-500">
+              <DropdownMenuItem className="text-red-500" onClick={logout}>
                 <LogOut />
                 Logout
               </DropdownMenuItem>
